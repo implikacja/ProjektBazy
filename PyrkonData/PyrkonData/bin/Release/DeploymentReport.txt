@@ -1,0 +1,34 @@
+﻿** Highlights
+     Tables that will be rebuilt
+       None
+     Clustered indexes that will be dropped
+       None
+     Clustered indexes that will be created
+       None
+     Possible data issues
+       None
+
+** User actions
+     Create
+       [dbo].[Bloki] (Table)
+       [dbo].[Budynki] (Table)
+       [dbo].[Funkcje] (Table)
+       [dbo].[Gry] (Table)
+       [dbo].[Prelekcje] (Table)
+       [dbo].[Rezerwacje_gier] (Table)
+       [dbo].[Rezerwacje_prelekcji] (Table)
+       [dbo].[Sale] (Table)
+       [dbo].[Uczestnicy] (Table)
+       [dbo].[Zgloszenia] (Table)
+       [dbo].[FK_Bloki_Uczestnicy] (Foreign Key)
+       [dbo].[FK_Prelekcje_Zgloszenia] (Foreign Key)
+       [dbo].[FK_Prelekcje_Sale] (Foreign Key)
+       [dbo].[FK_Rezerwacje_gier_Gry] (Foreign Key)
+       [dbo].[FK_Rezerwacje_gier_Uczestnicy] (Foreign Key)
+       [dbo].[FK_Rezerwacje_prelekcji_Uczestnicy] (Foreign Key)
+       [dbo].[FK_Rezerwacje_prelekcji_Prelekcje] (Foreign Key)
+       [dbo].[FK_Sale_Budynki] (Foreign Key)
+       [dbo].[FK_Uczestnicy_Funkcje] (Foreign Key)
+       [dbo].[FK_Zgloszenia_Uczestnicy] (Foreign Key)
+
+** Supporting actions

@@ -1,0 +1,5 @@
+C:\Users\Agnieszka\Desktop\studia\GIT\bazy danych\PyrkonData\PyrkonData\bin\Release\PyrkonData.dacpac
+C:\Users\Agnieszka\Desktop\studia\GIT\bazy danych\PyrkonData\PyrkonData\bin\Release\PyrkonData.dll
+C:\Users\Agnieszka\Desktop\studia\GIT\bazy danych\PyrkonData\PyrkonData\bin\Release\PyrkonData.pdb
+C:\Users\Agnieszka\Desktop\studia\GIT\bazy danych\PyrkonData\PyrkonData\obj\Release\PyrkonData.dll
+C:\Users\Agnieszka\Desktop\studia\GIT\bazy danych\PyrkonData\PyrkonData\obj\Release\PyrkonData.pdb
