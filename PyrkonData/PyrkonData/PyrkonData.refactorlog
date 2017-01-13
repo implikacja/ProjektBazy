@@ -105,4 +105,18 @@
     <Property Name="ParentElementType" Value="SqlTable" />
     <Property Name="NewName" Value="CNSTREINT" />
   </Operation>
+  <Operation Name="Rename Refactor" Key="f86baa23-4bbb-4207-9e9c-ad6c50891ca0" ChangeDateTime="01/13/2017 18:33:36">
+    <Property Name="ElementName" Value="[dbo].[Sale].[Pojemnosc]" />
+    <Property Name="ElementType" Value="SqlSimpleColumn" />
+    <Property Name="ParentElementName" Value="[dbo].[Sale]" />
+    <Property Name="ParentElementType" Value="SqlTable" />
+    <Property Name="NewName" Value="Pojemnosc0" />
+  </Operation>
+  <Operation Name="Rename Refactor" Key="71175a32-8b47-4f10-a4c4-3b2622bd9105" ChangeDateTime="01/13/2017 18:33:48">
+    <Property Name="ElementName" Value="[dbo].[Sale].[Pojemnosc0]" />
+    <Property Name="ElementType" Value="SqlSimpleColumn" />
+    <Property Name="ParentElementName" Value="[dbo].[Sale]" />
+    <Property Name="ParentElementType" Value="SqlTable" />
+    <Property Name="NewName" Value="Pojemnosc" />
+  </Operation>
 </Operations>

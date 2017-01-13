@@ -10,3 +10,25 @@
     CONSTRAINT [FK_Prelekcje_Zgloszenia] FOREIGN KEY ([Id_Zgloszenia]) REFERENCES [Zgloszenia]([Id_Zgloszenia]) ON DELETE CASCADE,
 	CONSTRAINT [FK_Prelekcje_Sale] FOREIGN KEY ([Id_Sali]) REFERENCES [Sale]([Id_Sali]) ON DELETE CASCADE
 )
+
+GO
+
+CREATE TRIGGER [dbo].[Trigger_Prelekcje_dodawanie]
+    ON [dbo].[Prelekcje]
+    AFTER INSERT
+    AS
+    BEGIN
+		DECLARE @IdZ int = INSERTED.Id_Zgloszenia;
+		EXEC OkreslPrelegenta @IdZ;
+    END
+
+GO
+
+CREATE TRIGGER [dbo].[Trigger_Prelekcje_usuwanie]
+    ON [dbo].[Prelekcje]
+    AFTER DELETE
+    AS
+    BEGIN
+		DECLARE @IdZ int = DELETED.Id_Zgloszenia;
+		EXEC OkreslPrelegenta @IdZ;
+    END

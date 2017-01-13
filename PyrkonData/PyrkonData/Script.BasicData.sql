@@ -14,7 +14,9 @@ MERGE INTO Funkcje AS Target
 USING (VALUES 
         (1, 'Administrator', 0.0), 
 		(2, 'Organizator', 0.0),
-        (4, 'Uczestnik', 90.0)
+		(3, 'Uczestnik', 90.0),
+		(4, 'Program 50%', 45.0),
+		(5, 'Program 100%', 0.0)
 ) 
 AS Source (Id_Funkcji, Nazwa, Cena_biletu) 
 ON Target.Id_Funkcji = Source.Id_Funkcji

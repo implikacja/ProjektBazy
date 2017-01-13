@@ -10,7 +10,7 @@
     [Nick] VARCHAR(50) NOT NULL, 
     [Telefon_kontaktowy] VARCHAR(9) NULL, 
 	[Telefon_opiekuna] VARCHAR(9) NULL, 
-    [Id_Funkcji] INT NOT NULL DEFAULT 3, 
+    [Id_Funkcji] INT NOT NULL DEFAULT 5, 
 	CONSTRAINT [Unikatowosc_uczestnika] UNIQUE (Email),
     CONSTRAINT [FK_Uczestnicy_Funkcje] FOREIGN KEY ([Id_Funkcji]) REFERENCES [Funkcje]([Id_Funkcji]) ON DELETE CASCADE,
 	CONSTRAINT [Zgoda_opiekuna] CHECK ([Wiek]>=18 OR [Telefon_opiekuna] IS NOT NULL),

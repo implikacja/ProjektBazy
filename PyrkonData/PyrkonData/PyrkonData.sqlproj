@@ -71,6 +71,8 @@
     <Build Include="Budynki.sql" />
     <Build Include="Rezerwacje_gier.sql" />
     <Build Include="Gry.sql" />
+    <Build Include="LiczbaMiejsc.sql" />
+    <Build Include="OkreslPrelegenta.sql" />
   </ItemGroup>
   <ItemGroup>
     <RefactorLog Include="PyrkonData.refactorlog" />
