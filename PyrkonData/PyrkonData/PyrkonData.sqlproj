@@ -75,4 +75,7 @@
   <ItemGroup>
     <RefactorLog Include="PyrkonData.refactorlog" />
   </ItemGroup>
+  <ItemGroup>
+    <PostDeploy Include="Script.BasicData.sql" />
+  </ItemGroup>
 </Project>

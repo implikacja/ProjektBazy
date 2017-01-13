@@ -15,8 +15,8 @@ SET NUMERIC_ROUNDABORT OFF;
 GO
 :setvar DatabaseName "PyrkonData"
 :setvar DefaultFilePrefix "PyrkonData"
-:setvar DefaultDataPath "C:\Users\Agnieszka\AppData\Local\Microsoft\VisualStudio\SSDT\PyrkonData"
-:setvar DefaultLogPath "C:\Users\Agnieszka\AppData\Local\Microsoft\VisualStudio\SSDT\PyrkonData"
+:setvar DefaultDataPath "C:\Users\LU\AppData\Local\Microsoft\VisualStudio\SSDT\PyrkonData"
+:setvar DefaultLogPath "C:\Users\LU\AppData\Local\Microsoft\VisualStudio\SSDT\PyrkonData"
 
 GO
 :on error exit
@@ -32,6 +32,48 @@ IF N'$(__IsSqlCmdEnabled)' NOT LIKE N'True'
     BEGIN
         PRINT N'SQLCMD mode must be enabled to successfully execute this script.';
         SET NOEXEC ON;
+    END
+
+
+GO
+IF EXISTS (SELECT 1
+           FROM   [master].[dbo].[sysdatabases]
+           WHERE  [name] = N'$(DatabaseName)')
+    BEGIN
+        ALTER DATABASE [$(DatabaseName)]
+            SET ARITHABORT ON,
+                CONCAT_NULL_YIELDS_NULL ON,
+                CURSOR_DEFAULT LOCAL 
+            WITH ROLLBACK IMMEDIATE;
+    END
+
+
+GO
+IF EXISTS (SELECT 1
+           FROM   [master].[dbo].[sysdatabases]
+           WHERE  [name] = N'$(DatabaseName)')
+    BEGIN
+        ALTER DATABASE [$(DatabaseName)]
+            SET PAGE_VERIFY NONE,
+                DISABLE_BROKER 
+            WITH ROLLBACK IMMEDIATE;
+    END
+
+
+GO
+ALTER DATABASE [$(DatabaseName)]
+    SET TARGET_RECOVERY_TIME = 0 SECONDS 
+    WITH ROLLBACK IMMEDIATE;
+
+
+GO
+IF EXISTS (SELECT 1
+           FROM   [master].[dbo].[sysdatabases]
+           WHERE  [name] = N'$(DatabaseName)')
+    BEGIN
+        ALTER DATABASE [$(DatabaseName)]
+            SET QUERY_STORE (CLEANUP_POLICY = (STALE_QUERY_THRESHOLD_DAYS = 367)) 
+            WITH ROLLBACK IMMEDIATE;
     END
 
 
@@ -77,6 +119,245 @@ PRINT N'Rename refactoring operation with key b968f77b-e93a-4d72-a663-4395fb5d21
 
 GO
 PRINT N'Rename refactoring operation with key 3ca30b56-0a58-4df4-a6fc-ffe370c0e1aa is skipped, element [dbo].[Gry].[Nazwa] (SqlSimpleColumn) will not be renamed to Tytul';
+
+
+GO
+PRINT N'Creating [dbo].[Bloki]...';
+
+
+GO
+CREATE TABLE [dbo].[Bloki] (
+    [Id_Bloku]      INT           IDENTITY (1, 1) NOT NULL,
+    [Nazwa]         VARCHAR (50)  NOT NULL,
+    [Opis]          VARCHAR (250) NULL,
+    [Id_Uczestnika] INT           NOT NULL,
+    PRIMARY KEY CLUSTERED ([Id_Bloku] ASC),
+    UNIQUE NONCLUSTERED ([Nazwa] ASC)
+);
+
+
+GO
+PRINT N'Creating [dbo].[Budynki]...';
+
+
+GO
+CREATE TABLE [dbo].[Budynki] (
+    [Id_Budynku]         INT           IDENTITY (1, 1) NOT NULL,
+    [Nazwa]              VARCHAR (50)  NOT NULL,
+    [Adres]              VARCHAR (100) NOT NULL,
+    [Godzina_otwarcia]   TIME (7)      NOT NULL,
+    [Godzina_zamkniecia] TIME (7)      NOT NULL,
+    PRIMARY KEY CLUSTERED ([Id_Budynku] ASC),
+    UNIQUE NONCLUSTERED ([Nazwa] ASC)
+);
+
+
+GO
+PRINT N'Creating [dbo].[Funkcje]...';
+
+
+GO
+CREATE TABLE [dbo].[Funkcje] (
+    [Id_Funkcji]  INT          IDENTITY (1, 1) NOT NULL,
+    [Nazwa]       VARCHAR (50) NOT NULL,
+    [Cena_biletu] MONEY        NOT NULL,
+    PRIMARY KEY CLUSTERED ([Id_Funkcji] ASC)
+);
+
+
+GO
+PRINT N'Creating [dbo].[Gry]...';
+
+
+GO
+CREATE TABLE [dbo].[Gry] (
+    [Id_Gry]      INT          IDENTITY (1, 1) NOT NULL,
+    [Tytul]       VARCHAR (50) NOT NULL,
+    [Wydawnictwo] VARCHAR (50) NOT NULL,
+    PRIMARY KEY CLUSTERED ([Id_Gry] ASC)
+);
+
+
+GO
+PRINT N'Creating [dbo].[Prelekcje]...';
+
+
+GO
+CREATE TABLE [dbo].[Prelekcje] (
+    [Id_Prelekcji]  INT           IDENTITY (1, 1) NOT NULL,
+    [Godzina]       SMALLDATETIME NOT NULL,
+    [Id_Zgloszenia] INT           NOT NULL,
+    [Id_Sali]       INT           NOT NULL,
+    PRIMARY KEY CLUSTERED ([Id_Prelekcji] ASC)
+);
+
+
+GO
+PRINT N'Creating [dbo].[Rezerwacje_gier]...';
+
+
+GO
+CREATE TABLE [dbo].[Rezerwacje_gier] (
+    [Id_Rezerwacji_Gry]   INT           IDENTITY (1, 1) NOT NULL,
+    [Godzina_rozpoczecia] SMALLDATETIME NOT NULL,
+    [Godzina_zakonczenia] SMALLDATETIME NOT NULL,
+    [Id_Gry]              INT           NOT NULL,
+    [Id_Uczestnika]       INT           NOT NULL,
+    PRIMARY KEY CLUSTERED ([Id_Rezerwacji_Gry] ASC)
+);
+
+
+GO
+PRINT N'Creating [dbo].[Rezerwacje_prelekcji]...';
+
+
+GO
+CREATE TABLE [dbo].[Rezerwacje_prelekcji] (
+    [Id_Rezerwacji_Prelekcji] INT IDENTITY (1, 1) NOT NULL,
+    [Id_Uczestnika]           INT NOT NULL,
+    [Id_Prelekcji]            INT NOT NULL,
+    PRIMARY KEY CLUSTERED ([Id_Rezerwacji_Prelekcji] ASC)
+);
+
+
+GO
+PRINT N'Creating [dbo].[Sale]...';
+
+
+GO
+CREATE TABLE [dbo].[Sale] (
+    [Id_sali]    INT IDENTITY (1, 1) NOT NULL,
+    [Pojemnosc]  INT NOT NULL,
+    [Id_Budynku] INT NOT NULL,
+    PRIMARY KEY CLUSTERED ([Id_sali] ASC)
+);
+
+
+GO
+PRINT N'Creating [dbo].[Uczestnicy]...';
+
+
+GO
+CREATE TABLE [dbo].[Uczestnicy] (
+    [Id_Uczestnika]      INT          IDENTITY (1000, 3) NOT NULL,
+    [Imie]               VARCHAR (50) NOT NULL,
+    [Nazwisko]           VARCHAR (50) NOT NULL,
+    [Wiek]               INT          NOT NULL,
+    [Nocleg]             BIT          NOT NULL,
+    [Email]              VARCHAR (50) NOT NULL,
+    [Hasło]              VARCHAR (50) NOT NULL,
+    [Nick]               VARCHAR (50) NOT NULL,
+    [Telefon_kontaktowy] VARCHAR (9)  NULL,
+    [Telefon_opiekuna]   VARCHAR (9)  NULL,
+    [Id_Funkcji]         INT          NOT NULL,
+    PRIMARY KEY CLUSTERED ([Id_Uczestnika] ASC),
+    UNIQUE NONCLUSTERED ([Email] ASC)
+);
+
+
+GO
+PRINT N'Creating [dbo].[Zgloszenia]...';
+
+
+GO
+CREATE TABLE [dbo].[Zgloszenia] (
+    [Id_Zgloszenia] INT           IDENTITY (100, 1) NOT NULL,
+    [Temat]         VARCHAR (50)  NOT NULL,
+    [Opis]          VARCHAR (250) NOT NULL,
+    [Status]        NVARCHAR (50) NOT NULL,
+    [Id_Uczestnika] INT           NOT NULL,
+    PRIMARY KEY CLUSTERED ([Id_Zgloszenia] ASC)
+);
+
+
+GO
+PRINT N'Creating unnamed constraint on [dbo].[Zgloszenia]...';
+
+
+GO
+ALTER TABLE [dbo].[Zgloszenia]
+    ADD DEFAULT 'Nowe zgłoszenie' FOR [Status];
+
+
+GO
+PRINT N'Creating [dbo].[FK_Bloki_Uczestnicy]...';
+
+
+GO
+ALTER TABLE [dbo].[Bloki] WITH NOCHECK
+    ADD CONSTRAINT [FK_Bloki_Uczestnicy] FOREIGN KEY ([Id_Uczestnika]) REFERENCES [dbo].[Uczestnicy] ([Id_Uczestnika]) ON DELETE CASCADE;
+
+
+GO
+PRINT N'Creating [dbo].[FK_Prelekcje_Zgloszenia]...';
+
+
+GO
+ALTER TABLE [dbo].[Prelekcje] WITH NOCHECK
+    ADD CONSTRAINT [FK_Prelekcje_Zgloszenia] FOREIGN KEY ([Id_Zgloszenia]) REFERENCES [dbo].[Zgloszenia] ([Id_Zgloszenia]) ON DELETE CASCADE;
+
+
+GO
+PRINT N'Creating [dbo].[FK_Prelekcje_Sale]...';
+
+
+GO
+ALTER TABLE [dbo].[Prelekcje] WITH NOCHECK
+    ADD CONSTRAINT [FK_Prelekcje_Sale] FOREIGN KEY ([Id_Sali]) REFERENCES [dbo].[Sale] ([Id_sali]) ON DELETE CASCADE;
+
+
+GO
+PRINT N'Creating [dbo].[FK_Rezerwacje_gier_Gry]...';
+
+
+GO
+ALTER TABLE [dbo].[Rezerwacje_gier] WITH NOCHECK
+    ADD CONSTRAINT [FK_Rezerwacje_gier_Gry] FOREIGN KEY ([Id_Gry]) REFERENCES [dbo].[Gry] ([Id_Gry]) ON DELETE CASCADE;
+
+
+GO
+PRINT N'Creating [dbo].[FK_Rezerwacje_gier_Uczestnicy]...';
+
+
+GO
+ALTER TABLE [dbo].[Rezerwacje_gier] WITH NOCHECK
+    ADD CONSTRAINT [FK_Rezerwacje_gier_Uczestnicy] FOREIGN KEY ([Id_Uczestnika]) REFERENCES [dbo].[Uczestnicy] ([Id_Uczestnika]) ON DELETE CASCADE;
+
+
+GO
+PRINT N'Creating [dbo].[FK_Rezerwacje_prelekcji_Uczestnicy]...';
+
+
+GO
+ALTER TABLE [dbo].[Rezerwacje_prelekcji] WITH NOCHECK
+    ADD CONSTRAINT [FK_Rezerwacje_prelekcji_Uczestnicy] FOREIGN KEY ([Id_Uczestnika]) REFERENCES [dbo].[Uczestnicy] ([Id_Uczestnika]) ON DELETE CASCADE;
+
+
+GO
+PRINT N'Creating [dbo].[FK_Rezerwacje_prelekcji_Prelekcje]...';
+
+
+GO
+ALTER TABLE [dbo].[Rezerwacje_prelekcji] WITH NOCHECK
+    ADD CONSTRAINT [FK_Rezerwacje_prelekcji_Prelekcje] FOREIGN KEY ([Id_Prelekcji]) REFERENCES [dbo].[Prelekcje] ([Id_Prelekcji]) ON DELETE CASCADE;
+
+
+GO
+PRINT N'Creating [dbo].[FK_Sale_Budynki]...';
+
+
+GO
+ALTER TABLE [dbo].[Sale] WITH NOCHECK
+    ADD CONSTRAINT [FK_Sale_Budynki] FOREIGN KEY ([Id_Budynku]) REFERENCES [dbo].[Budynki] ([Id_Budynku]) ON DELETE CASCADE;
+
+
+GO
+PRINT N'Creating [dbo].[FK_Uczestnicy_Funkcje]...';
+
+
+GO
+ALTER TABLE [dbo].[Uczestnicy] WITH NOCHECK
+    ADD CONSTRAINT [FK_Uczestnicy_Funkcje] FOREIGN KEY ([Id_Funkcji]) REFERENCES [dbo].[Funkcje] ([Id_Funkcji]) ON DELETE CASCADE;
 
 
 GO
@@ -131,6 +412,24 @@ USE [$(DatabaseName)];
 
 
 GO
+ALTER TABLE [dbo].[Bloki] WITH CHECK CHECK CONSTRAINT [FK_Bloki_Uczestnicy];
+
+ALTER TABLE [dbo].[Prelekcje] WITH CHECK CHECK CONSTRAINT [FK_Prelekcje_Zgloszenia];
+
+ALTER TABLE [dbo].[Prelekcje] WITH CHECK CHECK CONSTRAINT [FK_Prelekcje_Sale];
+
+ALTER TABLE [dbo].[Rezerwacje_gier] WITH CHECK CHECK CONSTRAINT [FK_Rezerwacje_gier_Gry];
+
+ALTER TABLE [dbo].[Rezerwacje_gier] WITH CHECK CHECK CONSTRAINT [FK_Rezerwacje_gier_Uczestnicy];
+
+ALTER TABLE [dbo].[Rezerwacje_prelekcji] WITH CHECK CHECK CONSTRAINT [FK_Rezerwacje_prelekcji_Uczestnicy];
+
+ALTER TABLE [dbo].[Rezerwacje_prelekcji] WITH CHECK CHECK CONSTRAINT [FK_Rezerwacje_prelekcji_Prelekcje];
+
+ALTER TABLE [dbo].[Sale] WITH CHECK CHECK CONSTRAINT [FK_Sale_Budynki];
+
+ALTER TABLE [dbo].[Uczestnicy] WITH CHECK CHECK CONSTRAINT [FK_Uczestnicy_Funkcje];
+
 ALTER TABLE [dbo].[Zgloszenia] WITH CHECK CHECK CONSTRAINT [FK_Zgloszenia_Uczestnicy];
 
 

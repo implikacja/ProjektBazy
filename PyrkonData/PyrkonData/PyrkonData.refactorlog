@@ -77,4 +77,32 @@
     <Property Name="ParentElementType" Value="SqlTable" />
     <Property Name="NewName" Value="Tytul" />
   </Operation>
+  <Operation Name="Rename Refactor" Key="d58a1ac7-a7aa-4dfb-a481-2fb873d330f1" ChangeDateTime="01/12/2017 23:35:07">
+    <Property Name="ElementName" Value="[dbo].[Uczestnicy].[Hasło]" />
+    <Property Name="ElementType" Value="SqlSimpleColumn" />
+    <Property Name="ParentElementName" Value="[dbo].[Uczestnicy]" />
+    <Property Name="ParentElementType" Value="SqlTable" />
+    <Property Name="NewName" Value="Haslo" />
+  </Operation>
+  <Operation Name="Rename Refactor" Key="624914e2-1a2f-4ba0-ab1c-a9f69d6cba54" ChangeDateTime="01/13/2017 00:02:22">
+    <Property Name="ElementName" Value="[dbo].[Sale].[Nazwa]" />
+    <Property Name="ElementType" Value="SqlSimpleColumn" />
+    <Property Name="ParentElementName" Value="[dbo].[Sale]" />
+    <Property Name="ParentElementType" Value="SqlTable" />
+    <Property Name="NewName" Value="Nazwa2" />
+  </Operation>
+  <Operation Name="Rename Refactor" Key="84438f6b-9b91-4d8a-8afc-6e78a9c80a29" ChangeDateTime="01/13/2017 00:02:28">
+    <Property Name="ElementName" Value="[dbo].[Sale].[Nazwa2]" />
+    <Property Name="ElementType" Value="SqlSimpleColumn" />
+    <Property Name="ParentElementName" Value="[dbo].[Sale]" />
+    <Property Name="ParentElementType" Value="SqlTable" />
+    <Property Name="NewName" Value="Nazwa" />
+  </Operation>
+  <Operation Name="Rename Refactor" Key="24ed55f5-b357-4125-8c32-cb76b4f8d79d" ChangeDateTime="01/13/2017 00:44:32">
+    <Property Name="ElementName" Value="[dbo].[Zgloszenia].[CONSTREINT]" />
+    <Property Name="ElementType" Value="SqlSimpleColumn" />
+    <Property Name="ParentElementName" Value="[dbo].[Zgloszenia]" />
+    <Property Name="ParentElementType" Value="SqlTable" />
+    <Property Name="NewName" Value="CNSTREINT" />
+  </Operation>
 </Operations>

@@ -238,7 +238,7 @@ PRINT N'Creating [dbo].[Gry]...';
 
 GO
 CREATE TABLE [dbo].[Gry] (
-    [Id_Gry]      INT          NOT NULL,
+    [Id_Gry]      INT          IDENTITY (1, 1) NOT NULL,
     [Tytul]       VARCHAR (50) NOT NULL,
     [Wydawnictwo] VARCHAR (50) NOT NULL,
     PRIMARY KEY CLUSTERED ([Id_Gry] ASC)
@@ -251,11 +251,11 @@ PRINT N'Creating [dbo].[Rezerwacje_gier]...';
 
 GO
 CREATE TABLE [dbo].[Rezerwacje_gier] (
-    [Id_Rezerwacji_Gry]   INT      NOT NULL,
-    [Godzina_rozpoczecia] TIME (7) NOT NULL,
-    [Godzina_zakonczenia] TIME (7) NOT NULL,
-    [Id_Gry]              INT      NOT NULL,
-    [Id_Uczestnika]       INT      NOT NULL,
+    [Id_Rezerwacji_Gry]   INT           IDENTITY (1, 1) NOT NULL,
+    [Godzina_rozpoczecia] SMALLDATETIME NOT NULL,
+    [Godzina_zakonczenia] SMALLDATETIME NOT NULL,
+    [Id_Gry]              INT           NOT NULL,
+    [Id_Uczestnika]       INT           NOT NULL,
     PRIMARY KEY CLUSTERED ([Id_Rezerwacji_Gry] ASC)
 );
 
@@ -266,12 +266,13 @@ PRINT N'Creating [dbo].[Budynki]...';
 
 GO
 CREATE TABLE [dbo].[Budynki] (
-    [Id_Budynku]         INT           NOT NULL,
+    [Id_Budynku]         INT           IDENTITY (1, 1) NOT NULL,
     [Nazwa]              VARCHAR (50)  NOT NULL,
     [Adres]              VARCHAR (100) NOT NULL,
-    [Godzina_otwarcia]   DATE          NOT NULL,
-    [Godzina_zamkniecia] DATE          NOT NULL,
-    PRIMARY KEY CLUSTERED ([Id_Budynku] ASC)
+    [Godzina_otwarcia]   TIME (7)      NOT NULL,
+    [Godzina_zamkniecia] TIME (7)      NOT NULL,
+    PRIMARY KEY CLUSTERED ([Id_Budynku] ASC),
+    UNIQUE NONCLUSTERED ([Nazwa] ASC)
 );
 
 
@@ -281,7 +282,7 @@ PRINT N'Creating [dbo].[Sale]...';
 
 GO
 CREATE TABLE [dbo].[Sale] (
-    [Id_sali]    INT NOT NULL,
+    [Id_sali]    INT IDENTITY (1, 1) NOT NULL,
     [Pojemnosc]  INT NOT NULL,
     [Id_Budynku] INT NOT NULL,
     PRIMARY KEY CLUSTERED ([Id_sali] ASC)
@@ -294,7 +295,7 @@ PRINT N'Creating [dbo].[Rezerwacje_prelekcji]...';
 
 GO
 CREATE TABLE [dbo].[Rezerwacje_prelekcji] (
-    [Id_Rezerwacji_Prelekcji] INT NOT NULL,
+    [Id_Rezerwacji_Prelekcji] INT IDENTITY (1, 1) NOT NULL,
     [Id_Uczestnika]           INT NOT NULL,
     [Id_Prelekcji]            INT NOT NULL,
     PRIMARY KEY CLUSTERED ([Id_Rezerwacji_Prelekcji] ASC)
@@ -307,10 +308,10 @@ PRINT N'Creating [dbo].[Prelekcje]...';
 
 GO
 CREATE TABLE [dbo].[Prelekcje] (
-    [Id_Prelekcji]        INT      NOT NULL,
-    [Godzina_rozpoczecia] TIME (7) NOT NULL,
-    [Id_Zgloszenia]       INT      NOT NULL,
-    [Id_Sali]             INT      NOT NULL,
+    [Id_Prelekcji]  INT           IDENTITY (1, 1) NOT NULL,
+    [Godzina]       SMALLDATETIME NOT NULL,
+    [Id_Zgloszenia] INT           NOT NULL,
+    [Id_Sali]       INT           NOT NULL,
     PRIMARY KEY CLUSTERED ([Id_Prelekcji] ASC)
 );
 
@@ -321,7 +322,7 @@ PRINT N'Creating [dbo].[Zgloszenia]...';
 
 GO
 CREATE TABLE [dbo].[Zgloszenia] (
-    [Id_Zgloszenia] INT           NOT NULL,
+    [Id_Zgloszenia] INT           IDENTITY (100, 1) NOT NULL,
     [Temat]         VARCHAR (50)  NOT NULL,
     [Opis]          VARCHAR (250) NOT NULL,
     [Status]        NVARCHAR (50) NOT NULL,
@@ -336,11 +337,12 @@ PRINT N'Creating [dbo].[Bloki]...';
 
 GO
 CREATE TABLE [dbo].[Bloki] (
-    [Id_Bloku]      INT           NOT NULL,
+    [Id_Bloku]      INT           IDENTITY (1, 1) NOT NULL,
     [Nazwa]         VARCHAR (50)  NOT NULL,
     [Opis]          VARCHAR (250) NULL,
     [Id_Uczestnika] INT           NOT NULL,
-    PRIMARY KEY CLUSTERED ([Id_Bloku] ASC)
+    PRIMARY KEY CLUSTERED ([Id_Bloku] ASC),
+    UNIQUE NONCLUSTERED ([Nazwa] ASC)
 );
 
 
@@ -350,7 +352,7 @@ PRINT N'Creating [dbo].[Funkcje]...';
 
 GO
 CREATE TABLE [dbo].[Funkcje] (
-    [Id_Funkcji]  INT          NOT NULL,
+    [Id_Funkcji]  INT          IDENTITY (1, 1) NOT NULL,
     [Nazwa]       VARCHAR (50) NOT NULL,
     [Cena_biletu] MONEY        NOT NULL,
     PRIMARY KEY CLUSTERED ([Id_Funkcji] ASC)
@@ -363,18 +365,29 @@ PRINT N'Creating [dbo].[Uczestnicy]...';
 
 GO
 CREATE TABLE [dbo].[Uczestnicy] (
-    [Id_Uczestnika]      INT          NOT NULL,
+    [Id_Uczestnika]      INT          IDENTITY (1000, 3) NOT NULL,
     [Imie]               VARCHAR (50) NOT NULL,
     [Nazwisko]           VARCHAR (50) NOT NULL,
     [Wiek]               INT          NOT NULL,
-    [Nocleg]             INT          NOT NULL,
+    [Nocleg]             BIT          NOT NULL,
     [Email]              VARCHAR (50) NOT NULL,
     [Hasło]              VARCHAR (50) NOT NULL,
     [Nick]               VARCHAR (50) NOT NULL,
-    [Telefon_kontaktowy] INT          NULL,
+    [Telefon_kontaktowy] VARCHAR (9)  NULL,
+    [Telefon_opiekuna]   VARCHAR (9)  NULL,
     [Id_Funkcji]         INT          NOT NULL,
-    PRIMARY KEY CLUSTERED ([Id_Uczestnika] ASC)
+    PRIMARY KEY CLUSTERED ([Id_Uczestnika] ASC),
+    UNIQUE NONCLUSTERED ([Email] ASC)
 );
+
+
+GO
+PRINT N'Creating unnamed constraint on [dbo].[Zgloszenia]...';
+
+
+GO
+ALTER TABLE [dbo].[Zgloszenia]
+    ADD DEFAULT 'Nowe zgłoszenie' FOR [Status];
 
 
 GO

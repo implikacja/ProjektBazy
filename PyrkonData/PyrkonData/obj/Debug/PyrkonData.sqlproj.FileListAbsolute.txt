@@ -7,3 +7,12 @@ C:\Users\Agnieszka\Desktop\studia\GIT\bazy danych\PyrkonData\PyrkonData\obj\Debu
 C:\Users\Agnieszka\Desktop\studia\GIT\bazy danych\PyrkonData\PyrkonData\obj\Debug\predeploy.sql
 C:\Users\Agnieszka\Desktop\studia\GIT\bazy danych\PyrkonData\PyrkonData\obj\Debug\PyrkonData.dll
 C:\Users\Agnieszka\Desktop\studia\GIT\bazy danych\PyrkonData\PyrkonData\obj\Debug\PyrkonData.pdb
+C:\Users\LU\Documents\Studia\Semestr V\SBD\ProjektBazy\PyrkonData\PyrkonData\bin\Debug\PyrkonData.dacpac
+C:\Users\LU\Documents\Studia\Semestr V\SBD\ProjektBazy\PyrkonData\PyrkonData\bin\Debug\PyrkonData.dll
+C:\Users\LU\Documents\Studia\Semestr V\SBD\ProjektBazy\PyrkonData\PyrkonData\bin\Debug\PyrkonData.pdb
+C:\Users\LU\Documents\Studia\Semestr V\SBD\ProjektBazy\PyrkonData\PyrkonData\obj\Debug\Model.xml
+C:\Users\LU\Documents\Studia\Semestr V\SBD\ProjektBazy\PyrkonData\PyrkonData\obj\Debug\refactor.xml
+C:\Users\LU\Documents\Studia\Semestr V\SBD\ProjektBazy\PyrkonData\PyrkonData\obj\Debug\postdeploy.sql
+C:\Users\LU\Documents\Studia\Semestr V\SBD\ProjektBazy\PyrkonData\PyrkonData\obj\Debug\predeploy.sql
+C:\Users\LU\Documents\Studia\Semestr V\SBD\ProjektBazy\PyrkonData\PyrkonData\obj\Debug\PyrkonData.dll
+C:\Users\LU\Documents\Studia\Semestr V\SBD\ProjektBazy\PyrkonData\PyrkonData\obj\Debug\PyrkonData.pdb
